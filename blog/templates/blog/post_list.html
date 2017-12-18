@@ -8,20 +8,12 @@
 			<h1><a href="">HeungDol's Django Blog!</a></h1>
 		</div>
 		
-		<div>
-			<p>published: 18.12.2017, 22:04</p>
-			<h2><a href="">My first post</a></h2>
-			<p>
-				My first text.
-			</p>
-		</div>
-		
-		<div>
-			<p>published: 18.12.2017, 22:05</p>
-			<h2><a href="">My second post</a></h2>
-			<p>
-				My second text.
-			</p>
-		</div>
+		{% for post in posts %}
+			<div>
+				<p>published: {{post.published_date}}</p>
+				<h1><a href="">{{post.title}}</a></h1>
+				<p>{{post.text|linebreaksbr}}</p>
+			</div>
+		{% endfor %}
 	</body>
 </html>
