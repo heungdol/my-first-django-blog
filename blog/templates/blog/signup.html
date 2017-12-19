@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>Avartar 회원가입</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" />
+    <link rel="shortcut icon" href="../avartaricon.ico" />
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+</head>
+
+<body>
+	
+    <main>
+		<form method="post">
+		{% csrf_token %}
+			<a href="{% url 'main' %}"><img src="{% static 'img/home.png' %}" width="150"></a>
+			<h2>#회원가입</h2>
+			<br>
+			<br>
+			{{ form.as_p }}
+			<button type="submit" class="last">가입하기</button>
+		</form>
+    </main>
+</body>
+
+</html>

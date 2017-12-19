@@ -1,24 +1,51 @@
-{% extends "blog/base.html" %}
+{% load staticfiles %}
+<html lang="ko">
 
-{% block content %}
-    {% if form.errors %}
-        <p>입력한 ID 혹은 PASSWORD가 잘못되었습니다.</p>
-    {% endif %}
+<head>
+    <meta charset="utf-8">
+    <title>Avartar 로그인</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" />
+    <link rel="shortcut icon" href="../avartaricon.ico" />
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+</head>
 
-    <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-        <table>
-        <tr>
-            <td>{{ form.username.label_tag }}</td>
-            <td>{{ form.username }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password.label_tag }}</td>
-            <td>{{ form.password }}</td>
-        </tr>
-        </table>
+<body>
+	
+    <main>
+		<form method="post" action="{% url 'login' %}">
+		{% csrf_token %}
+			<a href="{% url 'main' %}"><img src="{% static 'img/home.png' %}" width="150"></a>
+			<h2>#로그인</h2>
+			<br>
+			<br>
+			<br>
+			{{ form.username.label_tag }}<br>{{ form.username }}
+			<br>
+			{{ form.password.label_tag }}<br>{{ form.password }}
+			<br>
+			<!--input type="checkbox" onclick="myFunction()">Show Password-->
+			<br>
+			{% if form.errors %}
+				<p>입력한 ID 혹은 PASSWORD가 잘못되었습니다.</p>
+			{% endif %}
+			<br>
+			<!--button onclick="findidFunction()">아이디찾기</button>
+			<button onclick="findpwFunction()">비밀번호찾기</button-->
+			
+			<!--input type="submit" value="login" /-->
+			<button type="submit" class="last">로그인</button>
+			<input type="hidden" name="next" value="{{ next }}" />
+		</form>
+    </main>
+</body>
 
-        <input type="submit" value="login" />
-        <input type="hidden" name="next" value="{{ next }}" />
-    </form>
-{% endblock %}
+</html>

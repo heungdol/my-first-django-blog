@@ -1,0 +1,141 @@
+body {
+    margin: 0;
+    font-family: "HY헤드라인M";
+    background-color: darksalmon;
+    color: ffffff;
+}
+
+a {
+    text-decoration: none;
+    font-family: "HY헤드라인M";
+	font-size: 20;
+    color: ffffff;
+}
+
+.topnav {
+    overflow: hidden;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 8px;
+    text-decoration: none;
+    font-size: 15px;
+    color: ffffff;
+}
+
+.topnav a: hover {
+    background-color: burlywood;
+}
+
+.topnav .search-container {
+    float: right;
+    color: darksalmon;
+}
+
+.topnav input[type=text]{
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 15px;
+    border: none;
+}
+
+.topnav .search-container button {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: burlywood;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    color: ffffff;
+}
+
+.topnav .search-container button:hover {
+    background: burlywood;
+}
+
+@media screen and (max-width: 600px) {
+    .topnav .search-container {
+        float: none;
+    }
+    .topnav a, .topnav input[type=text], .topnav .search-container button {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+    }
+    .topnav input[type=text] {
+        border: 1px solid #ccc;
+    }
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table a {
+    color: ffffff;
+    text-decoration: none;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color:burlywood;
+}
+
+main {
+    margin: 0;
+    text-align: center;
+    font-size: 12;
+    width: 700;
+    margin-top: 50;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+    padding: 0px;
+    color: ffffff;
+}
+
+.left{
+    text-align: left;
+}
+
+.right{
+    text-align: right;
+}
+
+button {
+    background-color: darksalmon;
+    border: none;
+    color: ffffff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.last {
+    background-color: burlywood;
+    font-size: 15px;
+    padding: 8px 60px;
+}
+
+select {
+    background-color: burlywood;
+    border: none;
+    color: ffffff;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+}
