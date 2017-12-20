@@ -1,44 +1,86 @@
-{% extends 'blog/base.html' %}
+{% load staticfiles %}
 
-{% block content %}
-	<div class="post">
-		{% if post.published_date %}
-			<div class="date">
-				{{ post.published_date }}
-			</div>
-		{% else %}
-			<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
-		{% endif %}
+<html lang="ko">
+<head>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 		
-		{% if user.is_authenticated %}
-			<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-			<a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-		{% endif %}
-		<h1>{{ post.title }}</h1>
-		<h4>{{ post.author }}</h4>
-		<p>{{ post.text|linebreaksbr }}</p>
-	</div>
-	
-	<hr>
-	
-	<a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+		<link rel="shortcut icon" href="{%static 'img/avartaricon.ico'%}" />
+		
+    <meta charset="utf-8">
+    <title>Avartar</title>
+    <link rel="stylesheet" href="{% static 'css/etc.css' %}" type="text/css" />
+    <link rel="shortcut icon" href="../avartaricon.ico" />
+</head>
 
-{% for comment in post.comments.all %}
-    {% if user.is_authenticated or comment.approved_comment %}
-    <div class="comment">
-        <div class="date">
-            {{ comment.created_date }}
-            {% if not comment.approved_comment %}
-                <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
-            {% endif %}
+<body>
+    <div class="topnav">
+        <a href="{% url 'main' %}"><img src="{% static 'img/home.png' %}" width="120"></a>
+
+        <div class="search-container">
+			{% if user.is_authenticated %}
+				<a style="font-size:20;font-weight: bold;">환영합니다 {{ user.username }}! </a><a style="font-size:20;font-weight: bold;" href="{% url 'logout' %}">#로그아웃</a>
+			{% else %}
+				<a style="font-size:20;font-weight: bold;" href="{% url 'login' %}" >#로그인</a>
+				<a style="font-size:20;font-weight: bold;" href="{% url 'signup' %}" >#회원가입</a>
+			{% endif %}
         </div>
-        <strong>{{ comment.author }}</strong>
-        <p>{{ comment.text|linebreaks }}</p>
     </div>
-    {% endif %}
-{% empty %}
-    <p>No comments here yet :(</p>
-{% endfor %}
+   
+        <br>
+		<div class="content container">
+			<div class="row">
+				<div class="col-md-8">
+					
+					<div class="post">
+						{% if post.published_date %}
+							<div class="date">
+								{{ post.published_date }}
+							</div>
+						{% endif %}
+						
+						<h1>{{ post.title }}</h1>
+						<h4>{{ post.author }}</h4>
+						<p>{{ post.text|linebreaksbr }}</p>
+						
+						{% if user.is_authenticated %}
+							{% if not post.published_date %}
+								<a class="last" href="{% url 'post_publish' pk=post.pk %}">글 공개하기</a>
+							{% endif %}
+							<a class="last" href="{% url 'post_edit' pk=post.pk %}">글 수정하기</a>
+							<a class="last" href="{% url 'post_remove' pk=post.pk %}">글 삭제하기</a>
+						{% endif %}
+						
+					</div>
+					
+				
+					<br>
+					<br>
+					
+					<a class="last" href="{% url 'add_comment_to_post' pk=post.pk %}">댓글 추가하기</a>
 
-{% endblock content %}
+					{% for comment in post.comments.all %}
+						{% if user.is_authenticated or comment.approved_comment %}
+						<div class="comment">
+							<div class="date">
+								{{ comment.created_date }}
+								{% if not comment.approved_comment %}
+									<a class="last" href="{% url 'comment_remove' pk=comment.pk %}">댓글 삭제하기</a>
+									<!--a class="last" href="{% url 'comment_approve' pk=comment.pk %}">댓글 공개하기</a-->
+								{% endif %}
+							</div>
+							<strong>{{ comment.author }}</strong>
+							<p>{{ comment.text|linebreaks }}</p>
+						</div>
+						{% endif %}
+					{% empty %}
+						<p>첫 댓글의 주인이 되어보세요!</p>
+					{% endfor %}
+		
+				</div>
+			</div>
+		</div>
+    
+</body>
+    
+</html>

@@ -28,6 +28,9 @@
 			<br>
 			<br>
 			{{ form.as_p }}
+			{% if form.errors %}
+				<p>위의 조건에 맞추어 사용자 이름과 비밀번호를 입력해주세요.</p>
+			{% endif %}
 			<button type="submit" class="last">가입하기</button>
 		</form>
     </main>

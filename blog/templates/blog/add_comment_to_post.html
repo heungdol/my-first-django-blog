@@ -1,9 +1,53 @@
-{% extends 'blog/base.html' %}
+{% load staticfiles %}
 
-{% block content %}
-    <h1>New comment</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Send</button>
-    </form>
-{% endblock %}
+<html lang="ko">
+<head>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+		<link rel="shortcut icon" href="{%static 'img/avartaricon.ico'%}" />
+		
+    <meta charset="utf-8">
+    <title>Avartar</title>
+    <link rel="stylesheet" href="{% static 'css/etc.css' %}" type="text/css" />
+    <link rel="shortcut icon" href="../avartaricon.ico" />
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="{% url 'main' %}"><img src="{% static 'img/home.png' %}" width="120"></a>
+
+        <div class="search-container">
+			{% if user.is_authenticated %}
+				<a style="font-size:20;font-weight: bold;">환영합니다 {{ user.username }}! </a><a style="font-size:20;font-weight: bold;" href="{% url 'logout' %}">#로그아웃</a>
+			{% else %}
+				<a style="font-size:20;font-weight: bold;" href="{% url 'login' %}" >#로그인</a>
+				<a style="font-size:20;font-weight: bold;" href="{% url 'signup' %}" >#회원가입</a>
+			{% endif %}
+        </div>
+    </div>
+   
+        <br>
+		
+	<div class="content container">
+		<div class="row">
+			<div class="col-md-8">
+			
+				<span>#댓글쓰기</span>
+				
+				<br>
+				<br>
+				
+				<form method="POST" class="post-form" style="color:black">
+					{% csrf_token %}
+					{{ form.as_p }}
+					<button type="submit" class="last">임시댓글작성</button>
+				</form>
+
+			</div>
+		</div>
+	</div>
+    
+</body>
+    
+</html>
