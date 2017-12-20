@@ -57,6 +57,12 @@ a {
     background: burlywood;
 }
 
+.textbutton {
+	overflow: hidden;
+	text-decoration: none;
+	border: none;
+}
+
 @media screen and (max-width: 600px) {
     .topnav .search-container {
         float: none;
@@ -94,10 +100,11 @@ tr:nth-child(even) {
 }
 
 main {
+	font-family: "HY헤드라인M";
     margin: 0;
     text-align: center;
     font-size: 12;
-    width: 1500;
+    width: 800;
     margin-top: 50;
     margin-right: auto;
     margin-left: auto;

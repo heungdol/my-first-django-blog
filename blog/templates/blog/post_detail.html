@@ -40,99 +40,84 @@
 			{% endif %}
         </div>
     </div>
-   
-        <br>
-		<div class="content container">
-			<div class="row">
-				<div class="col-md-8">
-				
+	
+    <br>
+	
+	<div class="content container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="post">
 					<a href="{% url 'post_list' %}" style="font-size:12; font-weight:bold"><< 리스트로 돌아가기</a>
+					<h2 style="font-weight:bold">{{ post.title }}</h2>
+					<h4>{{ post.author }} | {% if post.published_date %}{{ post.published_date }}{% endif %}</h4>
+					
+					<div class = "textbutton">
+						<a href="{% url 'post_edit' pk=post.pk %}" style="font-size:12; ">(#글 수정하기)</a>
+						&nbsp;
+						<a href="{% url 'post_remove' pk=post.pk %}" style="font-size:12; ">(#글 삭제하기)</a>
+						&nbsp;
+						{% if not post.published_date %}
+						<a href="{% url 'post_publish' pk=post.pk %}" style="font-size:12; ">(#글 공개하기)</a>
+						{% endif %}
+					</div>
 					
 					<br>
+					<br>
 					
-					<div class="post">
-						{% if post.published_date %}
-							<div class="date">
-								{{ post.published_date }}
-							</div>
-						{% endif %}
-						
-						<h1>{{ post.title }}</h1>
-						<h4>{{ post.author }}</h4>
-						<br>
-						
-						<p>{{ post.text|linebreaksbr }}</p>
-						
-						<br>
-						<br>
-						
-						<p> 제공자: {{ info }}</p>
-						
-						<br>
-						
-						후원자: 
-						{% for sponsor in sponsors %}
-							<p>{{ sponsor }}</p>
-						{% endfor %}
-						
-						<br>
-						<br>
-						
+					<h4>{{ post.text|linebreaksbr }}</h4>
+					
+					<br>
+					<br>
+					<h4 style="font-weight:bold">'{{ post.title }}'의 제공 및 후원 상황</h4>
+					<p>제공자: {{ info }}</p>
+					<p>
+					후원자: 
+					{% for sponsor in sponsors %}
+					{{ sponsor }}, 
+					{% endfor %}
+					</p>
+					<br>
 						{% if user.is_authenticated %}
-							<input type="checkbox" id="donate" disabled> <a style="font-size:16; font-weight:bold" href="{% url 'add_user_sponsor' pk=post.pk %}">#후원하기</a> 
-							<input type="checkbox" id="receive" disabled> <a style="font-size:16; font-weight:bold" href="{% url 'set_user_informant' pk=post.pk %}">#제공하기</a> 
-							<button onclick="check()" style="font-size:16; font-weight:bold">#확인</button>
+							
+							<a style="font-size:16; font-weight:bold" href="{% url 'add_user_sponsor' pk=post.pk %}">#후원하기</a> 
+							&nbsp;
+							<a style="font-size:16; font-weight:bold" href="{% url 'set_user_informant' pk=post.pk %}">#제공하기</a> 
 							
 							<br>
 							<br>
 							
 							<a id="video" disabled class ="last" href = "{% url 'post_detail_video' pk=post.pk %}">동영상 보기</a>
-							
-							<br>
-							<br>
-							<br>
-							
-							{% if not post.published_date %}
-							<a class="last" href="{% url 'post_publish' pk=post.pk %}">글 공개하기</a>
-							{% endif %}
-							<a class="last" href="{% url 'post_edit' pk=post.pk %}">글 수정하기</a>
-							<a class="last" href="{% url 'post_remove' pk=post.pk %}">글 삭제하기</a>
-							
 						{% endif %}
-						
-						<br>
-						
-					</div>
-					
-				
-					<br>
-					<br>
-					
-					{% for comment in post.comments.all %}
-						{% if user.is_authenticated or comment.approved_comment %}
-						<br>
-						<div class="comment">
-							<div class="date">
-								{{ comment.created_date }}
-								{% if not comment.approved_comment %}
-									<a href="{% url 'comment_remove' pk=comment.pk %}" style="font-size:12">(#댓글 삭제하기)</a>
-									<!--a class="last" href="{% url 'comment_approve' pk=comment.pk %}">댓글 공개하기</a-->
-								{% endif %}
-							</div>
-							<strong>{{ comment.author }}</strong>
-							<p>{{ comment.text|linebreaks }}</p>
-						</div>
-						<br>
-						{% endif %}
-					{% empty %}
-						<p>첫 댓글의 주인이 되어보세요!</p>
-					{% endfor %}
-					
-					<a class="last" href="{% url 'add_comment_to_post' pk=post.pk %}">댓글 추가하기</a>
-		
 				</div>
+
+				<br>
+				<br>
+				<br>
+				
+				<h4 style="font-weight:bold">'{{ post.title }}'의 댓글</h4>
+				
+				{% for comment in post.comments.all %}
+					{% if user.is_authenticated or comment.approved_comment %}
+					<div class="comment">
+						<strong>{{ comment.author }}</strong> | {{ comment.created_date }}
+						<p>{{ comment.text|linebreaks }}</p>
+						<div class="date">
+							{% if not comment.approved_comment %}
+								<a href="{% url 'comment_remove' pk=comment.pk %}" style="font-size:12">(#댓글 삭제하기)</a>
+							{% endif %}
+						</div>
+					</div>
+					<br>
+					{% endif %}
+				{% empty %}
+					<p>첫 댓글의 주인이 되어보세요!</p>
+				{% endfor %}
+				
+				<a class="last" href="{% url 'add_comment_to_post' pk=post.pk %}">댓글 추가하기</a>
+	
 			</div>
 		</div>
+	</div>
     
 </body>
     

@@ -25,15 +25,22 @@
         <h1>#게시판</h1>
         <table>
             <tr>
-                <th>게시글</th>
-                <th>글쓴이</th>
+                <th>제목</th>
+                <th style = "text-align: center">글쓴이</th>
                 <th>게시날짜</th>
+				<th style = "text-align: center">제공여부</th>
             </tr>
 			{% for post in posts %}
 				<tr>
                 <td><a href="{% url 'post_detail' pk=post.pk %}" >{{post.title}}</a></td>
-                <td>{{ post.author }}</td>
+                <td style = "text-align: center">{{ post.author }}</td>
                 <td>{{ post.published_date }}</td>
+				<td style = "text-align: center">{% if post.user_informant != None %}
+					O
+					{% else %}
+					X
+					{% endif %}
+				</td>
             </tr>
 			{% endfor %}
             

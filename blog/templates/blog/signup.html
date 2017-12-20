@@ -24,7 +24,7 @@
 		<form method="post">
 		{% csrf_token %}
 			<a href="{% url 'main' %}"><img src="{% static 'img/home_fix.png' %}" width="150"></a>
-			<h2>#회원가입</h2>
+			<h1>#회원가입</h1>
 			<br>
 			<br>
 			{{ form.as_p }}

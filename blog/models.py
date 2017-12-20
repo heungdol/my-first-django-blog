@@ -11,7 +11,8 @@ class Post (models.Model) :
 
     user_informant = models.TextField(null=True)
     user_sponsors = models.TextField(null=True)
-    
+
+    url_youtube = models.CharField(max_length=750)
 
     def publish (self) :
         self.published_date = timezone.now()

@@ -49,8 +49,12 @@
 
 						<br>
 						<br>
+						{% if url == None %}
+							<iframe width="500" height="345" src="https://www.youtube.com/embed/ei344nnLLV0" ></iframe>
+						{% else %}
+							<iframe width="500" height="345" src="{{ url }}" ></iframe>	
+						{% endif %}
 						
-						<iframe width="500" height="345" src="https://www.youtube.com/embed/V2hlQkVJZhE" ></iframe>
 						
 					</div>
 				</div>

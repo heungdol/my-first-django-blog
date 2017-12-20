@@ -168,8 +168,13 @@ def post_detail_video (request, pk) :
     if (post.user_informant == None) :
         can_watch = False
 
+    url_current = post.url_youtube
+    if (url_current != None and url_current[0:len('https://youtu.be/')] == 'https://youtu.be/') :
+        url_current_id = url_current[len('https://youtu.be/'):]
+        url_current = 'https://www.youtube.com/embed/' + url_current_id
+
     if (can_watch) :
-        return render(request, 'blog/post_detail_video.html', {'title': post.title, 'info' : post.user_informant})
+        return render(request, 'blog/post_detail_video.html', {'title': post.title, 'info' : post.user_informant, 'url': url_current})
     else :
         return redirect('post_detail', pk=post.pk)
     
