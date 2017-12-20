@@ -57,25 +57,27 @@
 					<br>
 					<br>
 					
-					<a class="last" href="{% url 'add_comment_to_post' pk=post.pk %}">댓글 추가하기</a>
-
 					{% for comment in post.comments.all %}
 						{% if user.is_authenticated or comment.approved_comment %}
+						<br>
 						<div class="comment">
 							<div class="date">
 								{{ comment.created_date }}
 								{% if not comment.approved_comment %}
-									<a class="last" href="{% url 'comment_remove' pk=comment.pk %}">댓글 삭제하기</a>
+									<a href="{% url 'comment_remove' pk=comment.pk %}" style="font-size:12">(#댓글 삭제하기)</a>
 									<!--a class="last" href="{% url 'comment_approve' pk=comment.pk %}">댓글 공개하기</a-->
 								{% endif %}
 							</div>
 							<strong>{{ comment.author }}</strong>
 							<p>{{ comment.text|linebreaks }}</p>
 						</div>
+						<br>
 						{% endif %}
 					{% empty %}
 						<p>첫 댓글의 주인이 되어보세요!</p>
 					{% endfor %}
+					
+					<a class="last" href="{% url 'add_comment_to_post' pk=post.pk %}">댓글 추가하기</a>
 		
 				</div>
 			</div>
