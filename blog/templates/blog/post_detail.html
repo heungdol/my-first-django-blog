@@ -31,6 +31,10 @@
 		<div class="content container">
 			<div class="row">
 				<div class="col-md-8">
+				
+					<a href="{% url 'post_list' %}" style="font-size:12; font-weight:bold"><< 리스트로 돌아가기</a>
+					
+					<br>
 					
 					<div class="post">
 						{% if post.published_date %}
@@ -41,7 +45,12 @@
 						
 						<h1>{{ post.title }}</h1>
 						<h4>{{ post.author }}</h4>
+						<br>
+						
 						<p>{{ post.text|linebreaksbr }}</p>
+						
+						<br>
+						<br>
 						
 						{% if user.is_authenticated %}
 							{% if not post.published_date %}
@@ -50,6 +59,8 @@
 							<a class="last" href="{% url 'post_edit' pk=post.pk %}">글 수정하기</a>
 							<a class="last" href="{% url 'post_remove' pk=post.pk %}">글 삭제하기</a>
 						{% endif %}
+						
+						<br>
 						
 					</div>
 					

@@ -4,19 +4,24 @@
 <head>
     <meta charset="utf-8">
     <title>Avartar</title>
-    <link rel="stylesheet" href="{% static 'css/main.css'%}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'css/etc.css'%}" type="text/css" />
+	<link rel="stylesheet" href="{% static 'css/main.css'%}" type="text/css" />
     <link rel="shortcut icon" href="{%static 'img/avartaricon.ico'%}" />
 </head>
 
 <body>
-    <header>
-        {% if user.is_authenticated %}
-			<a>환영합니다 {{ user.username }}! </a><a href="{% url 'logout' %}">#로그아웃</a>
-		{% else %}
-			<a href="{% url 'login' %}" >#로그인</a>
-			<a href="{% url 'signup' %}" >#회원가입</a>
-		{% endif %}
-    </header>
+    <body>
+		<div class="topnav">
+			<div class="search-container">
+				{% if user.is_authenticated %}
+					<a style="font-size:20;font-weight: bold;">환영합니다 {{ user.username }}! </a><a style="font-size:20;font-weight: bold;" href="{% url 'logout' %}">#로그아웃</a>
+				{% else %}
+					<a style="font-size:20;font-weight: bold;" href="{% url 'login' %}" >#로그인</a>
+					<a style="font-size:20;font-weight: bold;" href="{% url 'signup' %}" >#회원가입</a>
+				{% endif %}
+			</div>
+		</div>
+	</body>
     <main>
         <img src="{%static 'img/home.png'%}">
         <br>
