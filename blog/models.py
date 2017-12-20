@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+import json
 
 class Post (models.Model) :
     author = models.ForeignKey('auth.User')
@@ -7,6 +8,10 @@ class Post (models.Model) :
     text = models.TextField()
     created_date = models.DateTimeField(default = timezone.now)
     published_date = models.DateTimeField(blank = True, null = True)
+
+    user_informant = models.TextField(null=True)
+    user_sponsors = models.TextField(null=True)
+    
 
     def publish (self) :
         self.published_date = timezone.now()
@@ -17,6 +22,47 @@ class Post (models.Model) :
     
     def approved_comments(self):
         return self.comments.filter(approved_comment=True)
+
+    def add_user_sponsor(self, user_add_sponsor) :
+        if (self.user_sponsors == None) :
+            self.user_sponsors = '[]'
+            
+        add = True
+        
+        list_sponsors = json.loads(str(self.user_sponsors))
+        for uesr_sponsor in list_sponsors :
+            if (str(uesr_sponsor) == str(user_add_sponsor)) :
+                add = False
+                break
+
+        if (str(user_add_sponsor) == str(self.user_informant)) :
+            add = False
+            
+        if (add == True) :
+            list_sponsors.append(str(user_add_sponsor))
+        self.user_sponsors = json.dumps(list_sponsors)
+            
+    def set_user_informant (self, user_set_informant) :
+        if (self.user_sponsors == None) :
+            self.user_sponsors = '[]'
+            
+        add = True
+        
+        if (self.user_informant != None) :
+            add = False
+
+        list_sponsors = json.loads(str(self.user_sponsors))
+        for uesr_sponsor in list_sponsors :
+            if (str(uesr_sponsor) == str(user_set_informant)) :
+                add = False
+                break
+        
+        if (add == True) :
+             self.user_informant = str(user_set_informant)
+
+    def get_user_sponsors (self) :
+        return json.loads(str(self.user_sponsors))
+
 
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', related_name='comments')

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+
+<script>
+function donate() {
+    document.getElementById("donate").checked = true;
+    document.getElementById("donate").disabled = true;
+}
+function receive() {
+    document.getElementById("receive").checked = true;
+    document.getElementById("receive").disabled = true;
+}
+function video() {
+    
+}
+
+    </script>
+    
+</head>
+<body>
+
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+후원 Checkbox: <input type="checkbox" id="donate" disabled>
+제공 Checkbox: <input type="checkbox" id="receive" disabled>
+<button onclick="donate()">후원하기</button>
+<button onclick="receive()">제공하기</button>
+
+
+<button onclick="check()">확인</button><br>
+    
+<button id="video" onclick="video()" disabled>동영상 보기</button>
+<script>function check() {
+    var x = document.getElementById("receive"),y=document.getElementById("donate");
+    if (x.checked == true||y.checked == true) {
+      document.getElementById("video").disabled = false;
+        }
+}</script>
+
+
+
+
+</body>
+</html>

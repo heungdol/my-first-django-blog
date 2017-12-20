@@ -8,14 +8,28 @@
 		<link rel="shortcut icon" href="{%static 'img/avartaricon.ico'%}" />
 		
     <meta charset="utf-8">
-    <title>Avartar</title>
+    <title>Avatar</title>
     <link rel="stylesheet" href="{% static 'css/etc.css' %}" type="text/css" />
     <link rel="shortcut icon" href="../avartaricon.ico" />
+	
+	<script>
+		function donate() {
+			document.getElementById("donate").checked = true;
+			document.getElementById("donate").disabled = true;
+		}
+		function receive() {
+			document.getElementById("receive").checked = true;
+			document.getElementById("receive").disabled = true;
+		}
+		function video() {
+			
+		}
+	</script>
 </head>
 
 <body>
     <div class="topnav">
-        <a href="{% url 'main' %}"><img src="{% static 'img/home.png' %}" width="120"></a>
+        <a href="{% url 'main' %}"><img src="{% static 'img/home_fix.png' %}" width="120"></a>
 
         <div class="search-container">
 			{% if user.is_authenticated %}
@@ -52,12 +66,38 @@
 						<br>
 						<br>
 						
+						<p> 제공자: {{ info }}</p>
+						
+						<br>
+						
+						후원자: 
+						{% for sponsor in sponsors %}
+							<p>{{ sponsor }}</p>
+						{% endfor %}
+						
+						<br>
+						<br>
+						
 						{% if user.is_authenticated %}
+							<input type="checkbox" id="donate" disabled> <a style="font-size:16; font-weight:bold" href="{% url 'add_user_sponsor' pk=post.pk %}">#후원하기</a> 
+							<input type="checkbox" id="receive" disabled> <a style="font-size:16; font-weight:bold" href="{% url 'set_user_informant' pk=post.pk %}">#제공하기</a> 
+							<button onclick="check()" style="font-size:16; font-weight:bold">#확인</button>
+							
+							<br>
+							<br>
+							
+							<a id="video" disabled class ="last" href = "{% url 'post_detail_video' pk=post.pk %}">동영상 보기</a>
+							
+							<br>
+							<br>
+							<br>
+							
 							{% if not post.published_date %}
-								<a class="last" href="{% url 'post_publish' pk=post.pk %}">글 공개하기</a>
+							<a class="last" href="{% url 'post_publish' pk=post.pk %}">글 공개하기</a>
 							{% endif %}
 							<a class="last" href="{% url 'post_edit' pk=post.pk %}">글 수정하기</a>
 							<a class="last" href="{% url 'post_remove' pk=post.pk %}">글 삭제하기</a>
+							
 						{% endif %}
 						
 						<br>

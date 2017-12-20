@@ -33,16 +33,12 @@
 		<div class="row">
 			<div class="col-md-8">
 			
-				<span>#댓글쓰기</span>
+				<span>#제공완료</span>
 				
 				<br>
 				<br>
 				
-				<form method="POST" class="post-form" style="color:black">
-					{% csrf_token %}
-					{{ form.as_p }}
-					<button type="submit" class="last">댓글작성</button>
-				</form>
+				<a href="{% url 'post_list' %}" >리스트로 돌아가기</a>
 
 			</div>
 		</div>

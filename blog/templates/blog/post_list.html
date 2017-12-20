@@ -3,14 +3,14 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>Avartar</title>
+    <title>Avatar</title>
     <link rel="stylesheet" href="{% static 'css/etc.css' %}" type="text/css" />
     <link rel="shortcut icon" href="{%static 'img/avartaricon.ico'%}" />
 </head>
 
 <body>
     <div class="topnav">
-        <a href="{% url 'main' %}"><img src="{% static 'img/home.png' %}" width="120"></a>
+        <a href="{% url 'main' %}"><img src="{% static 'img/home_fix.png' %}" width="120"></a>
 
         <div class="search-container">
 			{% if user.is_authenticated %}
@@ -27,7 +27,7 @@
             <tr>
                 <th>게시글</th>
                 <th>글쓴이</th>
-                <th>기간</th>
+                <th>게시날짜</th>
             </tr>
 			{% for post in posts %}
 				<tr>

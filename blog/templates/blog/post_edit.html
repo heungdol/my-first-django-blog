@@ -8,14 +8,14 @@
 		<link rel="shortcut icon" href="{%static 'img/avartaricon.ico'%}" />
 		
     <meta charset="utf-8">
-    <title>Avartar</title>
+    <title>Avatar</title>
     <link rel="stylesheet" href="{% static 'css/etc.css' %}" type="text/css" />
     <link rel="shortcut icon" href="../avartaricon.ico" />
 </head>
 
 <body>
     <div class="topnav">
-        <a href="{% url 'main' %}"><img src="{% static 'img/home.png' %}" width="120"></a>
+        <a href="{% url 'main' %}"><img src="{% static 'img/home_fix.png' %}" width="120"></a>
 
         <div class="search-container">
 			{% if user.is_authenticated %}
@@ -33,7 +33,7 @@
 		<div class="row">
 			<div class="col-md-8">
 			
-				<span>#임시글쓰기</span>
+				<span>#글쓰기 및 수정</span>
 				
 				<br>
 				<br>

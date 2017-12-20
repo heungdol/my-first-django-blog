@@ -10,16 +10,24 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
+import json
+
 def main (request) :
     return render(request, 'blog/main.html')
 
 def post_list(request) :
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 def post_detail(request, pk) :
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    sponsors = []
+    if (post.user_sponsors != None) :
+        sponsors = json.loads(post.user_sponsors)
+    informant = post.user_informant
+    
+    return render(request, 'blog/post_detail.html', {'post': post, 'sponsors': sponsors, 'info': informant})
 
 @login_required
 def post_new (request):
@@ -76,6 +84,7 @@ def post_remove(request, pk):
     post.delete()
     return redirect('post_list')
 
+@login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -121,3 +130,46 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'blog/signup.html', {'form': form})
+
+@login_required
+def add_user_sponsor(request, pk) :
+    post = get_object_or_404(Post, pk=pk)
+    post.add_user_sponsor(request.user)
+    post.save()
+    return redirect('post_detail', pk=post.pk)
+    #return render(request, 'blog/add_sponsor_to_post.html', {})
+    
+
+@login_required
+def set_user_informant(request, pk) :
+    post = get_object_or_404(Post, pk=pk)
+    post.set_user_informant(request.user)
+    post.save()
+    return redirect('post_detail', pk=post.pk)
+    #return render(request, 'blog/add_informant_to_post.html', {})
+
+@login_required
+def post_detail_video (request, pk) :
+    can_watch = False
+    post = get_object_or_404(Post, pk=pk)
+
+    if (str(request.user) == str(post.user_informant)) :
+        can_watch = True
+
+    sponsors = []
+    if (post.user_sponsors != None) :
+        sponsors = json.loads(post.user_sponsors)
+
+    for sponsor in sponsors :
+        if (str(sponsor) == str(request.user)) :
+            can_watch = True
+            break
+
+    if (post.user_informant == None) :
+        can_watch = False
+
+    if (can_watch) :
+        return render(request, 'blog/post_detail_video.html', {'title': post.title, 'info' : post.user_informant})
+    else :
+        return redirect('post_detail', pk=post.pk)
+    
